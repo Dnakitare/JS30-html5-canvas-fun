@@ -19,15 +19,25 @@
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
 			// stroke style (the brush)
-			ctx.strokeStyle = '#BADASS';
+			ctx.strokeStyle = '#BADA55';
 			ctx.lineJoin = 'round';
 			ctx.lineCap = 'round';
+			// thickkk
+			ctx.lineWidth = 75;
+			// blend mode, multiply, subtract, etc... google it!
+			ctx.globalCompositeOperation = 'multiply';
 
 			// only draw when holding click
 			let isDrawing = false;
 			// start and stop for the line
 			let lastX = 0;
 			let lastY = 0;
+			// mother effing hsl
+			let hue = 0;
+			// line width
+			let direction = true;
+
+
 
 			// called when mouse is moved
 
@@ -35,6 +45,8 @@
 				// stop the function from drawing when they are not moused down
 				if(!isDrawing) return;
 				console.log(e);
+				// mother effing hsl
+				ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
 				// start drawing
 				ctx.beginPath();
 				// beginning x and y for path
@@ -45,14 +57,41 @@
 				ctx.stroke();
 
 				// update lastX and last Y
-				lastX = e.offsetX;
-				lastY = e.offsetY;
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+
+				// mother effing hsl, increment it!
+				hue++;
+				// reset hue
+				if(hue >= 360) {
+					hue = 0;
+				}
+
+				// increment the line width
+				if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+					direction = !direction;
+				}
+
+				// incremented up to 100 then back down to 1 then back up again... etc
+				if(direction) {
+					ctx.lineWidth++;
+				} else {
+					ctx.lineWidth--;
+				}
+
+
 			}
+
+
+			// listen for mouse click on the canvas and if so change isDrawing to true
+			canvas.addEventListener('mousedown', (e) => {
+				isDrawing = true;
+				// fix the 0,0 stroke problem
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+			});
 
 			// listen for mouse movement on the canvas and trigger draw function
 			canvas.addEventListener('mousemove', draw);
-			// listen for mouse click on the canvas and if so change isDrawing to true
-			canvas.addEventListener('mousedown', () => isDrawing = true);
+
 			// listen for un clicked mouse on the canvas and if so change isDrawing to false
 			canvas.addEventListener('mouseup', () => isDrawing = false);
 			// listen for mouse off the canvas and if so change isDrawing to false
