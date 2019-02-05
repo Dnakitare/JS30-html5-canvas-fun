@@ -11,6 +11,14 @@
 		<canvas id="draw" width="800" height="800"></canvas>
 
 		<script>
+			// grab element
+			const canvas = document.querySelector('#draw');
+			// get the 2d context
+			const ctx = canvas.getContext('2d');
+			// resize the canvas to be exact size of the window
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
 
 		</script>
 
