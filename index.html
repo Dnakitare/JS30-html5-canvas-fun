@@ -35,6 +35,18 @@
 				// stop the function from drawing when they are not moused down
 				if(!isDrawing) return;
 				console.log(e);
+				// start drawing
+				ctx.beginPath();
+				// beginning x and y for path
+				ctx.moveTo(lastX, lastY);
+				// end x and y of path
+				ctx.lineTo(e.offsetX, e.offsetY);
+				// call the stroke function
+				ctx.stroke();
+
+				// update lastX and last Y
+				lastX = e.offsetX;
+				lastY = e.offsetY;
 			}
 
 			// listen for mouse movement on the canvas and trigger draw function
@@ -45,6 +57,8 @@
 			canvas.addEventListener('mouseup', () => isDrawing = false);
 			// listen for mouse off the canvas and if so change isDrawing to false
 			canvas.addEventListener('mouseout', () => isDrawing = false);
+
+
 
 
 
