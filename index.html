@@ -15,9 +15,38 @@
 			const canvas = document.querySelector('#draw');
 			// get the 2d context
 			const ctx = canvas.getContext('2d');
-			// resize the canvas to be exact size of the window
+			// re-size the canvas to be exact size of the window
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
+			// stroke style (the brush)
+			ctx.strokeStyle = '#BADASS';
+			ctx.lineJoin = 'round';
+			ctx.lineCap = 'round';
+
+			// only draw when holding click
+			let isDrawing = false;
+			// start and stop for the line
+			let lastX = 0;
+			let lastY = 0;
+
+			// called when mouse is moved
+
+			function draw(e){
+				// stop the function from drawing when they are not moused down
+				if(!isDrawing) return;
+				console.log(e);
+			}
+
+			// listen for mouse movement on the canvas and trigger draw function
+			canvas.addEventListener('mousemove', draw);
+			// listen for mouse click on the canvas and if so change isDrawing to true
+			canvas.addEventListener('mousedown', () => isDrawing = true);
+			// listen for un clicked mouse on the canvas and if so change isDrawing to false
+			canvas.addEventListener('mouseup', () => isDrawing = false);
+			// listen for mouse off the canvas and if so change isDrawing to false
+			canvas.addEventListener('mouseout', () => isDrawing = false);
+
+
 
 
 		</script>
